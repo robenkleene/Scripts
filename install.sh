@@ -1,0 +1,1 @@
+ln -s ~/Scripts/mdprev.sh ~/Scripts/bin/mdprev
