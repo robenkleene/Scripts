@@ -39,13 +39,13 @@ done
 
 
 if $MARKED_FLAG ; then
-	open -a "Marked.app" $2
+	open -a "Marked.app" "$2"
 elif $LYNX_FLAG ; then
-	markdown $2 | smartypants | lynx -stdin
+	markdown "$2" | smartypants | lynx -stdin
 elif $SAFARI_FLAG ; then
 	TEMPDIRECTORY=$(mktemp -d /tmp/markdown-XXXXXX)
 	HTMLFILE=$TEMPDIRECTORY/markdown.html
-	markdown $2 | smartypants > $HTMLFILE
+	markdown "$2" | smartypants > $HTMLFILE
 	open $HTMLFILE
 # Below Doesn't work yet
 #	JSFILE=$TEMPDIRECTORY/markdown.js
