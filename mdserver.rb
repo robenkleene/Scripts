@@ -1,44 +1,51 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
-# Adapted from http://userbound.com/blog/Markview-Ruby-Socket-Plus-RedCarpet/
-
-require "rubygems" # Required by Ruby 1.8
-require "socket"
+require 'webrick'
 require "redcarpet"
+include WEBrick
 
-def generatePage(filePath)
-	#Read style file
-#	style = File.read("/home/mil/.config/markview/style.css")
+class MarkdownHandler < WEBrick::HTTPServlet::AbstractServlet
 
-	#Use Redcarpet to convert Markdown->HTML
-	redcarpet = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-	markdown = redcarpet.render(File.read(filePath))
+  def initialize(server, name)
+    super
+    @filepath = name
+  end
 
-	#The Content Header Well Be Serving
-	header = "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
+  def do_GET(req, res)
+    begin
+      res.body = parse_markdown_file(@filepath)
+      res['content-type'] = 'text/html'
+    end
+  end
 
-	#The Content We'll Be Serving
+  private
+    def parse_markdown_file(filepath)
+
+      	data = open(filepath){|io| io.read }
+
+        redcarpet = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+	body = redcarpet.render(data)
+
+	filename = File.basename(filepath,File.extname(filepath))
+
 	content = %(
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Markview : #{filePath}</title>
+		<title>#{filename}</title>
 	</head>
-	<body>#{markdown}</body>
+	<body>#{body}</body>
 	)
-	# <!-- <style type="text/css">#{style}</style> -->
-	return header, content
+	
+	return content
+    end
 end
 
-#Start it Up
-server = TCPServer.new('localhost', 2000)
-loop do
-	header, content = generatePage("#{Dir.getwd}/#{ARGV[0]}")
-	Thread.start(server.accept) do |session|
-#		session.print(header)
-		session.print(content)
-		session.close
-	end
-end
+WEBrick::HTTPServlet::FileHandler.add_handler("md", MarkdownHandler)
+
+s = HTTPServer.new(Port: 2000,DocumentRoot: "~")
+
+trap("INT") { s.shutdown }
+s.start
