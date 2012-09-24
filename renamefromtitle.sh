@@ -11,11 +11,20 @@ do
 		case $OLD_FILENAME in
 		*.* )  
 			EXTENSION="${OLD_FILENAME##*.}"
-			NEW_FILENAME=$NEW_FILENAME.$EXTENSION
+			;;
+		* )  
+			EXTENSION="md"
 			;;
 		esac
+		NEW_FILENAME=$NEW_FILENAME.$EXTENSION
 		NEW_FILE=$DIRECTORY/$NEW_FILENAME
-		mv "$OLD_FILE" "$NEW_FILE"
+				
+	 	if [[ ! -f $NEW_FILE ]]; then
+			mv "$OLD_FILE" "$NEW_FILE"
+			echo $NEW_FILE
+		else
+			echo "Error: $NEW_FILE already exists"
+			exit 1
+	 	fi
 	fi
 done
-

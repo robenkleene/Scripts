@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ -z "$EDITOR" ]; then
-        echo "Error: EDITOR is not set"
-        exit 1
-fi
-
 if [ -z "$TEXT_INBOX" ]; then
 	echo "Error: TEXT_INBOX is not set"
 	exit 1
@@ -17,4 +12,4 @@ if [ ! -d "$TEXT_INBOX_EXPANDED" ]; then
 fi
 
 TEXTFILE=$(mktemp $TEXT_INBOX_EXPANDED/inbox-XXXXXX)
-$EDITOR $TEXTFILE
+echo $TEXTFILE
