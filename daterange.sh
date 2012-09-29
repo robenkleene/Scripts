@@ -1,27 +1,29 @@
 #!/bin/bash
 
 usage () {
-  echo "Usage: daterange [-s starting modifier] [-c length of range]"
+  echo "Usage: daterange [-f forward modifier] [-b backward modifier] [-c length of range]"
 }
 
 DATECOUNT=0
-while getopts c:h: option
+FORWARDMODIFIER=0
+BACKWARDMODIFIER=0
+while getopts f:b:c:h: option
 do
 	case "$option"
 	in
 	    c)  DATECOUNT=$OPTARG
 			;;
-	    # s)  Implement starting modifier...
-	    #     ;;
+	    f)  FORWARDMODIFIER=$OPTARG
+			;;
+	    b)  BACKWARDMODIFIER=$OPTARG
+			;;
 	    h)  usage
 	        exit 0 
 	        ;;
-	    :)  echo "Error: -$option requires an argument" 
-	        usage
+	    :)  usage # Error for missing value after arguement
 	        exit 1
 	        ;;
-	    \?)  echo "Error: unknown option -$option" 
-	        usage
+	    \?) usage
 	        exit 1
 	        ;;
 	esac
@@ -33,6 +35,12 @@ fi
 
 for i in `seq 1 $DATECOUNT`
 do
-	DATEOFFSET=$(($i-1))
-	echo `date -v+"$DATEOFFSET"d '+%m/%d/%Y'`
+	DATEOFFSET=$(($i-1+$FORWARDMODIFIER-$BACKWARDMODIFIER))
+	if [[ $DATEOFFSET -lt 0 ]]; then
+		DATEOFFSET=${DATEOFFSET#-} # Absolute value
+		echo `date -v-"$DATEOFFSET"d '+%m/%d/%Y'`
+	else
+		echo `date -v+"$DATEOFFSET"d '+%m/%d/%Y'`
+
+	fi	
 done
