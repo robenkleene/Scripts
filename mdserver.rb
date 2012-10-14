@@ -7,7 +7,7 @@ require "redcarpet"
 include WEBrick
 
 # Parse Arguements
-logging=false
+logging = false
 options = {}
 option_parser = OptionParser.new do |opts|
   opts.on("-l") do
@@ -57,7 +57,7 @@ end
 
 WEBrick::HTTPServlet::FileHandler.add_handler("md", MarkdownHandler)
 
-options = {:Port => 2000, :DocumentRoot => "~"}
+options = {:DocumentRoot => "~", :Port => 2000}
 if !logging
   options.merge!(:Logger => WEBrick::Log.new("/dev/null"), :AccessLog => [nil, nil])
 end
