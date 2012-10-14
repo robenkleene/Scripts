@@ -10,12 +10,11 @@ include WEBrick
 logging=false
 options = {}
 option_parser = OptionParser.new do |opts|
-  opts.on("-l") do    
+  opts.on("-l") do
     logging=true
   end
 end
 option_parser.parse!
-
 
 class MarkdownHandler < WEBrick::HTTPServlet::AbstractServlet
 
@@ -58,11 +57,12 @@ end
 
 WEBrick::HTTPServlet::FileHandler.add_handler("md", MarkdownHandler)
 
-if logging
-  s = HTTPServer.new(Port: 2000,DocumentRoot: "~")
-else
-  s = HTTPServer.new(Port: 2000,DocumentRoot: "~", Logger: WEBrick::Log.new("/dev/null"), AccessLog: [nil, nil])
+options = {:Port => 2000, :DocumentRoot => "~"}
+if !logging
+  options.merge!(:Logger => WEBrick::Log.new("/dev/null"), :AccessLog => [nil, nil])
 end
+
+s = HTTPServer.new(options)
 
 trap("INT") { s.shutdown }
 s.start
