@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cd ~/Dotfiles/
+pwd
+git status
 cd ~/Library/Services/
 pwd
 git status
