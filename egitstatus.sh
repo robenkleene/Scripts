@@ -1,23 +1,18 @@
 #!/bin/bash
 
-cd ~/Dotfiles/
-pwd
-git status
-cd ~/Library/Services/
-pwd
-git status
-cd ~/Library/Application\ Support/Avian/Bundles/Roben.tmbundle/
-pwd
-git status
-cd ~/Library/Scripts/
-pwd
-git status
-cd ~/Development/Scripts/
-pwd
-git status
-cd ~/Development/Snippets/
-pwd
-git status
-cd ~/Development/Bookmarklets/
-pwd
-git status
+function GitStatus {
+	cd "$1"
+	pwd
+	git status
+	echo
+}
+
+GitStatus ~/Development/LaunchAgents
+GitStatus ~/Dotfiles/
+GitStatus ~/Library/Services/
+GitStatus ~/Library/Application\ Support/Avian/Bundles/Roben.tmbundle/
+GitStatus ~/Library/Scripts/
+GitStatus ~/Development/Scripts/
+GitStatus ~/Development/Snippets/
+GitStatus ~/Development/Bookmarklets/
+GitStatus ~/Development/Bookmarklets/
