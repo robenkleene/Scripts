@@ -7,7 +7,7 @@ usage () {
 DATECOUNT=0
 FORWARDMODIFIER=0
 BACKWARDMODIFIER=0
-while getopts f:b:c:h: option
+while getopts f:b:c:h option
 do
 	case "$option"
 	in
@@ -27,7 +27,7 @@ do
 	        exit 1
 	        ;;
 	esac
-done    
+done
 
 if [[ $DATECOUNT -lt 1 ]]; then
 	DATECOUNT=1
