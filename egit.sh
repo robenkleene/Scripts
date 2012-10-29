@@ -45,7 +45,7 @@ function GitProcess {
 		
 	if $NEXT ; then
 		if $NOT_STAGED; then
-			pwd
+			echo $(pwd) # No idea why this is necessary to wrap in echo, but script sometimes fails otherwise
 			break
 		fi
 	else
