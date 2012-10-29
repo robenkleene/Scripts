@@ -45,7 +45,8 @@ function GitProcess {
 		
 	if $NEXT ; then
 		if $NOT_STAGED; then
-			echo $(pwd) # No idea why this is necessary to wrap in echo, but script sometimes fails otherwise
+			DIRECTORY=$(pwd) # No idea why this is necessary to wrap in echo, but script sometimes fails otherwise
+			echo $DIRECTORY
 			break
 		fi
 	else
