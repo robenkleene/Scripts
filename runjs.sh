@@ -7,6 +7,7 @@ osascript <<-APPLESCRIPT
 	set theBookmarkletFile to "$TEMPFILE"
 	set theJavaScript to read theBookmarkletFile
 	tell application "Safari"
+		activate
 		do JavaScript theJavaScript in document 1
 	end tell
 	return -- Suppresses superfluous output
