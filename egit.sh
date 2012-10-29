@@ -38,15 +38,14 @@ do
 done
 
 function GitProcess {
-	NOT_STAGED=false
+	NOTHING_TO_COMMIT=false
 	STATUS=$(git status)
-	NOT_STAGED_MESSAGE="Changes not staged for commit"
-	test "${STATUS#*$NOT_STAGED_MESSAGE}" != "$STATUS" && NOT_STAGED=true
+	NOTHING_TO_COMMIT_MESSAGE="nothing to commit (working directory clean)"
+	test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
 		
 	if $NEXT ; then
-		if $NOT_STAGED; then
-			DIRECTORY=$(pwd) # No idea why this is necessary to wrap in echo, but script sometimes fails otherwise
-			echo $DIRECTORY
+		if ! $NOTHING_TO_COMMIT ; then
+			pwd
 			break
 		fi
 	else
@@ -55,9 +54,9 @@ function GitProcess {
 		git status
 	fi
 
-	if $PUSH && ! $NOT_STAGED ; then
+	if $PUSH && $NOTHING_TO_COMMIT ; then
 		git push
-	elif $PULL && ! $NOT_STAGED ; then
+	elif $PULL && $NOTHING_TO_COMMIT ; then
 		git pull
 	fi
 }
