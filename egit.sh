@@ -66,8 +66,10 @@ function GoToDirectory {
 		cd "$1"
 		GitProcess		
 	else
-		echo "Directory does not exist $1"
-		echo
+		if ! $NEXT ; then # Suppress all output if not $NEXT
+			echo
+			echo "Directory does not exist $1"
+		fi
 	fi
 }
 
