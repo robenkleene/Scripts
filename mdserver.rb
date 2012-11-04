@@ -55,6 +55,9 @@ class MarkdownHandler < WEBrick::HTTPServlet::AbstractServlet
     end
 end
 
+mimetypes = WEBrick::HTTPUtils::DefaultMimeTypes
+mimetypes["svg"] = "image/svg+xml"
+
 WEBrick::HTTPServlet::FileHandler.add_handler("md", MarkdownHandler)
 
 options = {:DocumentRoot => "~", :Port => 2000}
