@@ -1,0 +1,4 @@
+#!/bin/sh
+
+urls | opensearchfromurls
+
