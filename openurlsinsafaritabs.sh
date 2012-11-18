@@ -8,6 +8,11 @@ THEURLS=${THEURLS%??}
 THEURLS=$THEURLS"}"
 echo $THEURLS
 
+if [[ "$THEURLS" = "{}" ]]; then
+	echo "No urls"
+	exit 1
+fi
+
 osascript <<-APPLESCRIPT
 set URLs to $THEURLS
 tell application "Safari"
