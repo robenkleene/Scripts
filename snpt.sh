@@ -8,10 +8,17 @@ if [ ! -d "$SNIPPETS_DIRECTORY_EXPANDED" ]; then
 	exit 1
 fi
 
-MATCH=$(find $SNIPPETS_DIRECTORY -iname "$1" -print -quit)
+if [ -z "$1" ]; then
+	# If no arguement is supplied read one line from stdin
+	read TEMPLATE
+else
+	TEMPLATE=$1
+fi
+
+MATCH=$(find $SNIPPETS_DIRECTORY -iname "$TEMPLATE" -print -quit)
 
 if [ -z "$MATCH" ]; then
-	echo "No snippet found for \"$1\""
+	echo "No snippet found for \"$TEMPLATE\""
 	exit 1
 fi
 
