@@ -1,3 +1,3 @@
 #!/bin/sh
 
-printf "⇧⌃⌥⌘" | pbcopy
+printf "⇧⌃⌥⌘"
