@@ -40,7 +40,12 @@ done
 function GitProcess {
 	NOTHING_TO_COMMIT=false
 	STATUS=$(git status)
+
+	# Test git status message 1.
 	NOTHING_TO_COMMIT_MESSAGE="nothing to commit (working directory clean)"
+	test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
+	# Test git status message 2.
+	NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working directory clean"
 	test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
 		
 	if $NEXT ; then
