@@ -16,7 +16,12 @@ while (<>) {
 		if (/^\t(.*)$/) {
 			print "$1\n";
 		} else {
-			last;
+			# If it is not a blank line we are done
+			if (/^\s*$/) { 
+				print "$1\n";
+			} else {
+				last;
+			}
 		}		
 	} elsif ($mode =~ /`/) {
 		/`(.*)`/;
