@@ -9,14 +9,19 @@ if [ ! -d "$SNIPPETS_DIRECTORY_EXPANDED" ]; then
 fi
 
 usage () {
-    echo "Usage: snpt [-l language] snippet"
+    echo "Usage: snpt [-l language] [-o] [-s snippet]"
 }
 
-while getopts l:h option
+OPEN=false
+while getopts l:os:h option
 do
     case "$option"
 	in
 	l)  LANGUAGE=$OPTARG
+	    ;;
+	s)  SNIPPET=$OPTARG
+	    ;;
+	o)  OPEN=true
 	    ;;
 	h)  usage
 	    exit 0 
@@ -30,12 +35,6 @@ do
     esac
 done
 
-if [[ -z "$LANGUAGE" ]]; then
-    SNIPPET=$1
-else
-    SNIPPET=$3
-fi
-
 if [ -z "$SNIPPET" ]; then
     # If no snippet was supplied as an argument, a read one line from stdin
     read SNIPPET
@@ -45,7 +44,6 @@ if [[ ! -z "$LANGUAGE" ]]; then
     SNIPPET=$SNIPPET.$LANGUAGE
 fi
 
-
 MATCH=$(find $SNIPPETS_DIRECTORY -iname "$SNIPPET" -print -quit)
 
 if [ -z "$MATCH" ]; then
@@ -53,4 +51,8 @@ if [ -z "$MATCH" ]; then
 	exit 1
 fi
 
-cat "$MATCH"
+if $OPEN; then
+    open "$MATCH"
+else
+    cat "$MATCH"
+fi
