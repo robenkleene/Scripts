@@ -1,48 +1,60 @@
 #!/bin/sh
 
 RUBY="rb"
+LISP="el"
 
 usage () {
-	echo "Usage: printvariable -l language -v variable"
-	echo "\nLanguages:"
-	echo "$RUBY : Ruby"
+    echo "Usage: printvariable -l language -v variable"
+    echo "\nLanguages:"
+    echo "$RUBY : Ruby"
+    echo "$LISP : Lisp"
 }
 
 while getopts l:v:h option
 do
-	case "$option"
+    case "$option"
 	in
-	    l)  LANGUAGE=$OPTARG
-			;;
-	    v)  VARIABLE=$OPTARG
-			;;
-	    h)  usage
-	        exit 0 
-	        ;;
-	    :)  usage # Error for missing value after arguement
-	        exit 1
-	        ;;
-	    \?) usage
-	        exit 1
-	        ;;
-	esac
+	l)  LANGUAGE=$OPTARG
+	    ;;
+	v)  VARIABLE=$OPTARG
+	    ;;
+	h)  usage
+	    exit 0 
+	    ;;
+	:)  usage # Error for missing value after arguement
+	    exit 1
+	    ;;
+	\?) usage
+	    exit 1
+	    ;;
+    esac
 done
 
 if [[ -z "$LANGUAGE" ]]; then
-	echo "No language specified\n"
-	usage
-	exit 1
+    echo "No language specified\n"
+    usage
+    exit 1
 fi
 
-if [[ -z "$VARIABLE" ]]; then
-	echo "No variable specified\n"
+if [ -z "$VARIABLE" ]; then
+    # If no variable was supplied as an argument, a read one line from stdin
+    read VARIABLE
+fi
+
+if [ -z "$VARIABLE" ]; then
+	echo "No variable provided"
 	usage
 	exit 1
 fi
 
 if [ "$LANGUAGE" = "$RUBY" ]; then
-	echo "puts \"$VARIABLE = \" + $VARIABLE.to_s"
-	exit 0
+    echo "puts \"$VARIABLE = \" + $VARIABLE.to_s"
+    exit 0
+fi
+
+if [ "$LANGUAGE" = "$LISP" ]; then
+    echo "(message \"$VARIABLE = %s\" $VARIABLE)"
+    exit 0
 fi
 
 echo "Language \"$LANGUAGE\" isn't supported"
