@@ -35,6 +35,13 @@ do
     esac
 done
 
+if [[ -z "$SNIPPET" && -z "$LANGUAGE" ]]; then
+	if ! $OPEN; then
+		# Allows no parameter simple calls to work
+		SNIPPET=$1
+	fi
+fi
+
 if [ -z "$SNIPPET" ]; then
     # If no snippet was supplied as an argument, a read one line from stdin
     read SNIPPET
