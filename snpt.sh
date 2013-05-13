@@ -51,6 +51,12 @@ if [[ ! -z "$LANGUAGE" ]]; then
     SNIPPET=$SNIPPET.$LANGUAGE
 fi
 
+if [[ "${SNIPPET:0:1}" == "." ]]; then
+	# Auto-insert template for the given language if no snippet is provided. Note that right now this clashes with the read from line above
+	SNIPPET=Template$SNIPPET
+fi
+
+
 MATCH=$(find $SNIPPETS_DIRECTORY -iname "$SNIPPET" -print -quit)
 
 if [ -z "$MATCH" ]; then
