@@ -13,19 +13,22 @@ var optimist = require('optimist')
 var argv = optimist.argv;
 var javaScript;
 var html;
+var rootURL;
 
 var fs = require("fs");
 
-if (argv.eh) {
-	html = decodeURI(argv.eh);
-} else if (argv.h) {
-	html = fs.readFileSync(argv.h).toString();
+function URLFromPath(path) {
+	return "file://" + encodeURI(path) + "/";
 }
 
-if (argv.ej) {
-	javaScript = decodeURI(argv.ej);
-} else if (argv.j) {
-	javaScript = fs.readFileSync(argv.j).toString();
+if (argv.eh) {
+	html = decodeURI(argv.eh);
+	rootURL = URLFromPath(process.cwd());
+} else if (argv.h) {
+	html = fs.readFileSync(argv.h).toString();
+	var path = require('path');
+	var directoryPath = path.resolve(path.dirname(argv.h));
+	rootURL = URLFromPath(directoryPath);
 }
 
 if (html === undefined) {
@@ -33,16 +36,29 @@ if (html === undefined) {
 	process.exit(1);
 }
 
-var jsdom = require("jsdom");
-var doc = jsdom.jsdom(html);
 if (!argv.o) {
+	if (argv.ej) {
+		javaScript = decodeURI(argv.ej);
+	} else if (argv.j) {
+		javaScript = fs.readFileSync(argv.j).toString();
+	}
 	if (javaScript === undefined) {
 		optimist.showHelp(fn=console.error)
 		process.exit(1);
 	}
-	var win = doc.createWindow();
-	var $ = require('jquery').create(win);
-	eval(javaScript)
 }
 
-console.log(doc.documentElement.outerHTML);
+var jsdom = require("jsdom");
+jsdom.env({
+	html: html,
+	src: [javaScript],
+	url: rootURL,
+	features: {
+		FetchExternalResources   : ['script'],
+		ProcessExternalResources : ['script'],
+		MutationEvents           : "2.0"
+	},
+	done: function (errors, window) {
+		console.log(window.document.documentElement.outerHTML);
+	}
+});
