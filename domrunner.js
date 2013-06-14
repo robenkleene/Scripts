@@ -9,32 +9,46 @@ var optimist = require('optimist')
 	.describe('ej', 'encoded JavaScript')
 	.describe('e', 'Evaluate only, don\'t print the DOM')
 	.describe('o', 'Output DOM without running JavaScript (useful for diffs)')
+	.describe('url', 'Root URL')
+	.alias('u', 'url')
 ;
+var fs = require("fs");
 
 var argv = optimist.argv;
 var javaScript;
 var html;
 var rootURL;
 
-var fs = require("fs");
-
 function URLFromPath(path) {
 	return "file://" + encodeURI(path) + "/";
 }
 
-if (argv.eh) {
-	html = decodeURI(argv.eh);
-	rootURL = URLFromPath(process.cwd());
-} else if (argv.h) {
-	html = fs.readFileSync(argv.h).toString();
-	var path = require('path');
-	var directoryPath = path.resolve(path.dirname(argv.h));
-	rootURL = URLFromPath(directoryPath);
+function usage(errorMessage) {
+	console.log(errorMessage);
+	optimist.showHelp(fn=console.error);
+	process.exit(1);
 }
 
-if (html === undefined) {
-	optimist.showHelp(fn=console.error)
-	process.exit(1);
+if (argv.url) {
+	rootURL = URLFromPath(argv.url);
+}
+
+if (argv.eh) {
+	html = decodeURI(argv.eh);
+	if (!rootURL) {
+		rootURL = URLFromPath(process.cwd());		
+	}
+} else if (argv.h) {
+	html = fs.readFileSync(argv.h).toString();
+	if (!rootURL) {
+		var path = require('path');
+		var directoryPath = path.resolve(path.dirname(argv.h));
+		rootURL = URLFromPath(directoryPath);
+	}
+}
+
+if (!html) {
+	usage("ERROR: html is undefined");
 }
 
 if (!argv.o) {
@@ -43,9 +57,8 @@ if (!argv.o) {
 	} else if (argv.j) {
 		javaScript = fs.readFileSync(argv.j).toString();
 	}
-	if (javaScript === undefined) {
-		optimist.showHelp(fn=console.error)
-		process.exit(1);
+	if (!javaScript) {
+		usage("ERROR: JavaScript is undefined");
 	}
 }
 
@@ -65,7 +78,6 @@ jsdom.env({
 		if (errors) {
 			console.log(errors);
 		}
-
 
 		window.console.log = console.log;		
 		window.eval(javaScript);
