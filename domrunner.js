@@ -62,12 +62,13 @@ jsdom.env({
 	done: function (errors, window) {
 		// If there's no src set, this runs before external scripts. It runs after if there is a source set.
 
-		window.console.log = console.log;		
-		window.eval(javaScript);
-
 		if (errors) {
 			console.log(errors);
 		}
+
+
+		window.console.log = console.log;		
+		window.eval(javaScript);
 
 		if (!argv.e) {
 			console.log(window.document.documentElement.outerHTML);
