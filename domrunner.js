@@ -2,11 +2,12 @@
 
 var optimist = require('optimist')
     .usage('Usage: $0 -h [HTML file] -j [JavaScript file]')
-    .boolean('o')
+    .boolean('o', 'e')
 	.describe('h', 'HTML file')
 	.describe('j', 'JavaScript file')
 	.describe('eh', 'encoded HTML')
 	.describe('ej', 'encoded JavaScript')
+	.describe('e', 'Evaluate only, don\'t print the DOM')
 	.describe('o', 'Output DOM without running JavaScript (useful for diffs)')
 ;
 
@@ -51,7 +52,7 @@ if (!argv.o) {
 var jsdom = require("jsdom");
 jsdom.env({
 	html: html,
-	src: [javaScript],
+	src: [""], // An empty JavaScript src forces external scripts to be processed before the callback fires.
 	url: rootURL,
 	features: {
 		FetchExternalResources   : ['script'],
@@ -59,6 +60,17 @@ jsdom.env({
 		MutationEvents           : "2.0"
 	},
 	done: function (errors, window) {
-		console.log(window.document.documentElement.outerHTML);
+		// If there's no src set, this runs before external scripts. It runs after if there is a source set.
+
+		window.console.log = console.log;		
+		window.eval(javaScript);
+
+		if (errors) {
+			console.log(errors);
+		}
+
+		if (!argv.e) {
+			console.log(window.document.documentElement.outerHTML);
+		}
 	}
 });
