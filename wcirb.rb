@@ -15,7 +15,7 @@ if !directory
 end
 
 if !WebConsole::plugin_is_running(PLUGIN_NAME)
-  WebConsole::run_plugin(PLUGIN_NAME)
+  WebConsole::run_plugin(PLUGIN_NAME, directory)
 end
 
 WebConsole::plugin_read_from_standard_input(PLUGIN_NAME, text)
