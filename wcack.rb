@@ -11,4 +11,4 @@ if !directory
   directory = Dir.pwd
 end
 
-WebConsole::run_plugin(PLUGIN_NAME, [term], directory)
+WebConsole::run_plugin(PLUGIN_NAME, directory, [term])
