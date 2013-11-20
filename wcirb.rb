@@ -14,7 +14,7 @@ if !directory
   directory = Dir.pwd
 end
 
-if !WebConsole::plugin_is_running(PLUGIN_NAME)
+if !WebConsole::plugin_has_windows(PLUGIN_NAME)
   WebConsole::run_plugin(PLUGIN_NAME, directory)
 end
 
