@@ -2,7 +2,7 @@
 
 require 'webconsole'
 
-PLUGIN_NAME = "Ack"
+PLUGIN_NAME = "Search"
 
 term = ARGV[0]
 directory = ARGV[1]
