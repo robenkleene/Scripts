@@ -2,12 +2,14 @@
 
 RUBY="rb"
 LISP="el"
+JAVASCRIPT="js"
 
 usage () {
     echo "Usage: printvariable -l language -v variable"
     echo "\nLanguages:"
     echo "$RUBY : Ruby"
     echo "$LISP : Lisp"
+	echo "$JAVASCRIPT : JavaScript"
 }
 
 while getopts l:v:h option
@@ -54,6 +56,11 @@ fi
 
 if [ "$LANGUAGE" = "$LISP" ]; then
     echo "(message \"$VARIABLE = %s\" $VARIABLE)"
+    exit 0
+fi
+
+if [ "$LANGUAGE" = "$JAVASCRIPT" ]; then
+    echo "console.log(\"$VARIABLE = \" + $VARIABLE)"
     exit 0
 fi
 
