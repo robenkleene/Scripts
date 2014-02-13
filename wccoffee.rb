@@ -2,12 +2,12 @@
 
 require 'webconsole'
 
-PLUGIN_NAME = "IRB"
+PLUGIN_NAME = "Coffee"
 
 directory = ARGV[0]
 
 text = STDIN.read
-text.gsub!("\n", "\uFF00") # \uFF00 is the unicode character Coffee uses for new lines, it's used here just to consolidate code into one line
+text.gsub!("\n", "\uFF00") # \uFF00 is the unicode character Coffee uses for new lines
 text = text + "\n"
 
 if !directory 

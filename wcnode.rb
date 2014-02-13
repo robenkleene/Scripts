@@ -2,7 +2,7 @@
 
 require 'webconsole'
 
-PLUGIN_NAME = "IRB"
+PLUGIN_NAME = "Node"
 
 directory = ARGV[0]
 
