@@ -19,4 +19,19 @@ file_url = URI.escape("file://" + file_path)
 # Markdown Link
 md_link = "[#{filename}](#{file_url})"
 
-puts md_link
+print md_link
+
+if !STDIN.tty?
+  whitespace = nil
+  while line = STDIN.gets
+    if !whitespace
+      puts ":\n\n"
+      if line =~ /^(\s{4}|\t)/
+        whitespace = ""
+      else
+        whitespace = "\t"
+      end
+    end
+    puts whitespace + line
+  end
+end
