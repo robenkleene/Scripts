@@ -17,7 +17,7 @@ file_path = File.expand_path(file)
 file_url = URI.escape("file://" + file_path)
 
 # Markdown Link
-md_link = "[#{filename}](#{file_url})"
+md_link = "[`#{filename}`](#{file_url})"
 
 print md_link
 
