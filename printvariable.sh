@@ -3,13 +3,15 @@
 RUBY="rb"
 LISP="el"
 JAVASCRIPT="js"
+COFFEESCRIPT="coffee"
 
 usage () {
     echo "Usage: printvariable -l language -v variable"
     echo "\nLanguages:"
     echo "$RUBY : Ruby"
     echo "$LISP : Lisp"
-	echo "$JAVASCRIPT : JavaScript"
+    echo "$JAVASCRIPT : JavaScript"
+    echo "$COFFEESCRIPT : CoffeeScript"
 }
 
 while getopts l:v:h option
@@ -61,6 +63,11 @@ fi
 
 if [ "$LANGUAGE" = "$JAVASCRIPT" ]; then
     echo "console.log(\"$VARIABLE = \" + $VARIABLE)"
+    exit 0
+fi
+
+if [ "$LANGUAGE" = "$COFFEESCRIPT" ]; then
+    echo "console.log \"$VARIABLE = \" + $VARIABLE"
     exit 0
 fi
 
