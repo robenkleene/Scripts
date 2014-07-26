@@ -1,10 +1,10 @@
 #!/bin/sh
 
-DIRECTORY="$1"
+# DIRECTORY="/Users/robenkleene/Development/Scratch/Shell/newbookmark/output"
+# RENAME="/Users/robenkleene/Development/Scripts/namefromtitle.pl"
 
-if [[ -z "$DIRECTORY" ]]; then
-	DIRECTORY=$(pwd)
-fi
+DIRECTORY="$HOME/Dropbox/Text/Inbox"
+RENAME="$HOME/Development/Scripts/namefromtitle.pl"
 
 if [[ -z "$DIRECTORY" ]]; then
 	echo "Error: $DIRECTORY is not a directory"
@@ -19,13 +19,15 @@ if [ ! -d "$DIRECTORY_EXPANDED" ]; then
 fi
 
 FILE=$(mktemp "$DIRECTORY_EXPANDED/markdown-XXXXXX")
-MARKDOWNFILE="$FILE.md"
+cat > $FILE
+
+NEWNAME=$($RENAME "$FILE")
+MARKDOWNFILE="$(dirname $FILE)/$NEWNAME.md"
 
 if [ -f "$MARKDOWNFILE" ]; then
   echo "Error: File already exists at $MARKDOWNFILE"
-	exit 1
+  exit 1
 fi
 
 mv -n "$FILE" "$MARKDOWNFILE"
-
-echo $MARKDOWNFILE
+open "$MARKDOWNFILE"
