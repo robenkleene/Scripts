@@ -1,3 +1,3 @@
 #!/bin/sh
 
-open -a Marked "$1"
+open -a "Marked 2" "$1"
