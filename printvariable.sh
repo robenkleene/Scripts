@@ -20,9 +20,9 @@ while getopts l:v:h option
 do
     case "$option"
 	in
-	l)  LANGUAGE=$OPTARG
+	l)  language=$OPTARG
 	    ;;
-	v)  VARIABLE=$OPTARG
+	v)  variable=$OPTARG
 	    ;;
 	h)  usage
 	    exit 0 
@@ -36,48 +36,48 @@ do
     esac
 done
 
-if [[ -z "$LANGUAGE" ]]; then
+if [[ -z "$language" ]]; then
     echo "No language specified\n"
     usage
     exit 1
 fi
 
-if [ -z "$VARIABLE" ]; then
+if [ -z "$variable" ]; then
     # If no variable was supplied as an argument, a read one line from stdin
-    read VARIABLE
+    read variable
 fi
 
-if [ -z "$VARIABLE" ]; then
+if [ -z "$variable" ]; then
 	echo "No variable provided"
 	usage
 	exit 1
 fi
 
-if [ "$LANGUAGE" = "$ruby" ]; then
-    echo "puts \"$VARIABLE = \" + $VARIABLE.to_s"
+if [ "$language" = "$ruby" ]; then
+    echo "puts \"$variable = \" + $variable.to_s"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$lisp" ]; then
-    echo "(message \"$VARIABLE = %s\" $VARIABLE)"
+if [ "$language" = "$lisp" ]; then
+    echo "(message \"$variable = %s\" $variable)"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$javascript" ]; then
-    echo "console.log(\"$VARIABLE = \" + $VARIABLE)"
+if [ "$language" = "$javascript" ]; then
+    echo "console.log(\"$variable = \" + $variable)"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$coffeescript" ]; then
-    echo "console.log \"$VARIABLE = \" + $VARIABLE"
+if [ "$language" = "$coffeescript" ]; then
+    echo "console.log \"$variable = \" + $variable"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$objectivec" ]; then
-    echo "NSLog(@\"$VARIABLE = \" + $VARIABLE);"
+if [ "$language" = "$objectivec" ]; then
+    echo "NSLog(@\"$variable = \", $variable);"
     exit 0
 fi
 
-echo "Language \"$LANGUAGE\" isn't supported"
+echo "Language \"$language\" isn't supported"
 usage
 exit 1
