@@ -1,19 +1,19 @@
 #!/bin/sh
 
-RUBY="rb"
-LISP="el"
-JAVASCRIPT="js"
-COFFEESCRIPT="coffee"
-OBJECTIVEC="m"
+ruby="rb"
+lisp="el"
+javascript="js"
+coffeescript="coffee"
+objectivec="m"
 
 usage () {
     echo "Usage: printvariable -l language -v variable"
     echo "\nLanguages:"
-    echo "$RUBY : Ruby"
-    echo "$LISP : Lisp"
-    echo "$JAVASCRIPT : JavaScript"
-    echo "$COFFEESCRIPT : CoffeeScript"
-    echo "$OBJECTIVEC : Objective-C"
+    echo "$ruby : ruby"
+    echo "$lisp : lisp"
+    echo "$javascript : JavaScript"
+    echo "$coffeescript : CoffeeScript"
+    echo "$objectivec : Objective-C"
 }
 
 while getopts l:v:h option
@@ -53,27 +53,27 @@ if [ -z "$VARIABLE" ]; then
 	exit 1
 fi
 
-if [ "$LANGUAGE" = "$RUBY" ]; then
+if [ "$LANGUAGE" = "$ruby" ]; then
     echo "puts \"$VARIABLE = \" + $VARIABLE.to_s"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$LISP" ]; then
+if [ "$LANGUAGE" = "$lisp" ]; then
     echo "(message \"$VARIABLE = %s\" $VARIABLE)"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$JAVASCRIPT" ]; then
+if [ "$LANGUAGE" = "$javascript" ]; then
     echo "console.log(\"$VARIABLE = \" + $VARIABLE)"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$COFFEESCRIPT" ]; then
+if [ "$LANGUAGE" = "$coffeescript" ]; then
     echo "console.log \"$VARIABLE = \" + $VARIABLE"
     exit 0
 fi
 
-if [ "$LANGUAGE" = "$OBJECTIVEC" ]; then
+if [ "$LANGUAGE" = "$objectivec" ]; then
     echo "NSLog(@\"$VARIABLE = \" + $VARIABLE);"
     exit 0
 fi
