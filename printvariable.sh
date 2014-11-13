@@ -74,7 +74,7 @@ if [ "$language" = "$coffeescript" ]; then
 fi
 
 if [ "$language" = "$objectivec" ]; then
-    echo "NSLog(@\"$variable = \", $variable);"
+    echo "NSLog(@\"$variable = %@\", $variable);"
     exit 0
 fi
 
