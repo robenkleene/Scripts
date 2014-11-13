@@ -4,6 +4,7 @@ RUBY="rb"
 LISP="el"
 JAVASCRIPT="js"
 COFFEESCRIPT="coffee"
+OBJECTIVEC="m"
 
 usage () {
     echo "Usage: printvariable -l language -v variable"
@@ -12,6 +13,7 @@ usage () {
     echo "$LISP : Lisp"
     echo "$JAVASCRIPT : JavaScript"
     echo "$COFFEESCRIPT : CoffeeScript"
+    echo "$OBJECTIVEC : Objective-C"
 }
 
 while getopts l:v:h option
@@ -68,6 +70,11 @@ fi
 
 if [ "$LANGUAGE" = "$COFFEESCRIPT" ]; then
     echo "console.log \"$VARIABLE = \" + $VARIABLE"
+    exit 0
+fi
+
+if [ "$LANGUAGE" = "$OBJECTIVEC" ]; then
+    echo "NSLog(@\"$VARIABLE = \" + $VARIABLE);"
     exit 0
 fi
 
