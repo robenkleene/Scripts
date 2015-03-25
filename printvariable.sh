@@ -1,5 +1,6 @@
 #!/bin/sh
 
+lua="lua"
 ruby="rb"
 lisp="el"
 javascript="js"
@@ -11,6 +12,7 @@ usage () {
     echo "\nLanguages:"
     echo "$ruby : ruby"
     echo "$lisp : lisp"
+    echo "$lua : lua"
     echo "$javascript : JavaScript"
     echo "$coffeescript : CoffeeScript"
     echo "$objectivec : Objective-C"
@@ -75,6 +77,11 @@ fi
 
 if [ "$language" = "$objectivec" ]; then
     echo "NSLog(@\"$variable = %@\", $variable);"
+    exit 0
+fi
+
+if [ "$language" = "$lua" ]; then
+    echo "print(\"$variable = \", $variable)"
     exit 0
 fi
 
