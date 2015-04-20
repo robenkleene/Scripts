@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EGITREPOS=~/Development/Environment/LaunchAgents:~/Dotfiles/:~/Library/Services/:~/Library/Application\ Support/Avian/Bundles/Roben.tmbundle/:~/Library/Scripts/:~/Development/Scripts/:~/Development/Script\ Libraries/:~/Development/Snippets/:~/Development/Environment/Bookmarklets/:~/Development/Environment/Settings/:
+EGITREPOS=~/Development/Environment/LaunchAgents:~/Dotfiles/:~/Library/Services/:~/Library/Application\ Support/Avian/Bundles/Roben.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/:~/Development/Scripts/:~/Development/Snippets/:~/Development/Environment/Bookmarklets/:~/Development/Environment/Settings/:
 IFS=:
 REPOS=${EGITREPOS?"EGITREPOS is not set"}
 
