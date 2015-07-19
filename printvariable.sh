@@ -66,7 +66,7 @@ if [ "$language" = "$lisp" ]; then
 fi
 
 if [ "$language" = "$javascript" ]; then
-    echo "console.log(\"$variable = \" + $variable)"
+    echo "console.log(\"$variable = \" + $variable);"
     exit 0
 fi
 
