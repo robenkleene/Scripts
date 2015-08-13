@@ -39,7 +39,7 @@ fi
 if $execute_command ; then
 	export execute_flag="-i ''"
 else
-	export preview_flag=" | git diff % -"
+	export preview_flag=" | git diff --no-index -- \"\$f\" -"
 fi
 
 export substitution_command=${non_option_arguments[0]}
@@ -49,4 +49,5 @@ if [ -z $substitution_command ]; then
 	exit 1
 fi
 
-ack -f --print0 | xargs -0 -I % sh -c "sed $execute_flag $substitution_command % $preview_flag"
+full_command="export f=\"{}\"; sed $execute_flag $substitution_command \"\$f\" $preview_flag"
+ack -f --print0 | xargs -0 -I {} sh -c "$full_command"
