@@ -1,8 +1,8 @@
 #!/usr/bin/osascript
 
+set thePath to do shell script "pwd"
 tell application "Terminal"
-	set theFolderPath to do shell script "pwd"
-	do script "cd " & the quoted form of theFolderPath
+	do script "cd " & the quoted form of thePath
 	activate
 end tell
 return
