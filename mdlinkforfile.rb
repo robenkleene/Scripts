@@ -9,6 +9,12 @@ end
 
 file = ARGF.file
 
+if ARGV.empty?
+  postfix = ""
+else
+  postfix = ARGV[0]
+end
+
 # Filename
 filename = File.basename(file)
 
@@ -17,7 +23,7 @@ file_path = File.expand_path(file)
 file_url = URI.escape("file://" + file_path)
 
 # Markdown Link
-md_link = "[`#{filename}`](#{file_url})"
+md_link = "[`#{filename}`](#{file_url}#{postfix})"
 
 print md_link
 
