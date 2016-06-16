@@ -9,7 +9,7 @@ sub title_from_line {
 	# Replace Special Characters
 	# "Special characters" are everything except underscores, spaces, ampersand, numbers & letters. "_" is the replacement character.
 	$_[0] =~ s{^[^\w\s&]+|[^\w\s&]+$}{}gi; # Replace leading and trailing special characters
-	$_[0] =~ s{[^\w\s&]}{_}gi; # Replace inline special characters
+	$_[0] =~ s{[^\w\s-&]}{_}gi; # Replace inline special characters
 	$_[0] =~ s{_+}{_}gi; # Replace consecutive replacement characters with one
 
 	# Inline White Spaces
