@@ -48,6 +48,10 @@ function GitProcess {
 	# Test git status message 2.
 	NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working directory clean"
 	test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
+	# Test git status message 3.
+	NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working tree clean"
+	test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
+
 		
 	if $NEXT ; then
 		if ! $NOTHING_TO_COMMIT ; then
@@ -70,7 +74,7 @@ function GitProcess {
 function GoToDirectory {
 	if [ -d "$1" ]; then
 		cd "$1"
-		GitProcess		
+		GitProcess
 	else
 		if ! $NEXT ; then # Suppress all output if not $NEXT
 			echo
