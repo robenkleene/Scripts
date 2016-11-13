@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EGITREPOS=~/Development/Dotfiles/:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/:~/Development/Scripts/:~/Development/Snippets/:
+EGITREPOS=~/Development/Dotfiles/:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/:~/Development/Scripts/:~/Development/Snippets/:~/Development/Archive/:~/Development/Settings/:
 IFS=:
 REPOS=${EGITREPOS?"EGITREPOS is not set"}
 
