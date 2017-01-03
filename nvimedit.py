@@ -14,6 +14,7 @@ if not addr:
     os.execvp('nvim', args)
 
 nvim = attach("socket", path=addr)
+ldir = os.getcwd()
 
 nvim.input('<c-\\><c-n>')  # exit terminal mode
 nvim.command('exe "lcd " fnameescape("' + ldir + '")')
