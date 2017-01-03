@@ -6,7 +6,7 @@ import sys
 
 from neovim import attach
 
-args = sys.argv[1:]
+args = sys.argv[1:] or [""]
 
 addr = os.environ.get("NVIM_LISTEN_ADDRESS", None)
 if not addr:
@@ -14,7 +14,6 @@ if not addr:
     os.execvp('nvim', args)
 
 nvim = attach("socket", path=addr)
-ldir = os.getcwd()
 
 nvim.input('<c-\\><c-n>')  # exit terminal mode
 nvim.command('exe "lcd " fnameescape("' + ldir + '")')
