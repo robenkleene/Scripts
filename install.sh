@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 INSTALL_DIRECTORY_NAME="Scripts" # The name of the directory to install from.
 
