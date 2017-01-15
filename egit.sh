@@ -1,6 +1,11 @@
 #!/bin/bash
 
-EGITREPOS=~/Development/Dotfiles/:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/:~/Development/Scripts/:~/Development/Snippets/:~/Development/Archive/:~/Development/Settings/:~/Documentation/design-references/:~/Documentation/development-references/:~/Documentation/music-production-references/:~/Documentation/software-references/:
+EGITREPOS=~/Development/Dotfiles/:~/Development/Scripts/:~/Development/Snippets/:~/Development/Archive/:~/Development/Settings/:~/Documentation/design-references/:~/Documentation/development-references/:~/Documentation/music-production-references/:~/Documentation/software-references/:
+
+if [ "$(uname)" == "Darwin" ]; then
+	EGITREPOS=$EGITREPOS:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/
+fi
+
 IFS=:
 REPOS=${EGITREPOS?"EGITREPOS is not set"}
 
