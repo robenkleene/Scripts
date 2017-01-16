@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$(uname)" == "Darwin" ]; then
 	pbcopy $@
 else
-	# `true` is no-op
-	true
+	cat >/dev/null
 fi
 
