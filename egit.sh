@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EGITREPOS=~/Development/Dotfiles/:~/Development/Scripts/:~/Development/Snippets/:~/Development/Archive/:~/Development/Settings/:~/Documentation/design-references/:~/Documentation/development-references/:~/Documentation/music-production-references/:~/Documentation/software-references/
+EGITREPOS=~/Development/Dotfiles/:~/Development/Scripts/:~/Development/Snippets/:~/Development/Archive/:~/Development/Settings/:~/Documentation/design-references/:~/Documentation/development-references/:~/Documentation/music-production-references/:~/Documentation/software-references/:~/Development/Scratch/
 
 if [ "$(uname)" == "Darwin" ]; then
 	EGITREPOS=$EGITREPOS:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/
