@@ -44,6 +44,9 @@ do
 done
 
 function GitProcess {
+	if ! [ -d ".git" ]; then
+		return
+	fi
 	NOTHING_TO_COMMIT=false
 	STATUS=$(git status)
 
