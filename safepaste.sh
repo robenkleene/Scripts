@@ -3,7 +3,7 @@
 if [ "$(uname)" == "Darwin" ]; then
 	pbpaste
 elif [ -n "$TMUX" ]; then
-	tmux saveb -	
+	tmux saveb -
 else
 	echo ''
 fi
