@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+# Orginally named `diff-hunk-list`
+
 use strict;
 use warnings;
 
