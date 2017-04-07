@@ -13,6 +13,7 @@ while (<STDIN>) {
    if (m(^\+\+\+ b/(.*)$)) {
       $printed = 0;
       $filename = $1;
+      $filename =~ s/\s+$//;
    } elsif (m(^@@ -\d+(?:,\d+)? \+(\d+))) {
       $line = $1;
       $offset = 0;
