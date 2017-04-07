@@ -10,7 +10,7 @@ tell application "iTerm"
 	set theWindow to (create window with default profile)
 	tell theWindow
 		tell current session of theWindow
-			write text "cd " & thePath
+			write text "cd " & the quoted form of thePath
 			activate
 		end tell
 	end tell
