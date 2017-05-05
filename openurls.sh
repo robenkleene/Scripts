@@ -1,3 +1,3 @@
 #!/bin/sh
 
-urls | openurlsinsafaritabs
+urls | openurlsinsafaritabs > /dev/null
