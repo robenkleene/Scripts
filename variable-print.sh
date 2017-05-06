@@ -8,7 +8,7 @@ coffeescript="coffee"
 objectivec="m"
 
 usage () {
-    echo "Usage: printvariable -l language -v variable"
+    echo "Usage: variable-print -l language -v variable"
     echo "\nLanguages:"
     echo "$ruby : ruby"
     echo "$lisp : lisp"

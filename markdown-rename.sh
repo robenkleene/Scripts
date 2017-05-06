@@ -6,7 +6,7 @@ do
 	OLD_FILENAME=$(basename "$OLD_FILE")
 	DIRECTORY=$(dirname "$OLD_FILE")
 
-	NEW_FILENAME=$(namefromtitle "$OLD_FILE")
+	NEW_FILENAME=$(markdown-filename "$OLD_FILE")
 	if [[ $? == "0" ]]; then
 		case $OLD_FILENAME in
 		*.* )  

@@ -24,7 +24,9 @@ function MakeSymlink {
 
 for thisFILE in *; do 
 	# Exclude this install script and directories
- 	if [[ ! $thisFILE =~ "install.sh" ]] && [ ! -d $thisFILE ]; then
+ 	if [[ ! $thisFILE =~ "install.sh" ]] && 
+		[[ ! $thisFILE =~ "tags" ]] &&
+		[ ! -d $thisFILE ]; then
 		MakeSymlink $thisFILE
  	fi
 done
