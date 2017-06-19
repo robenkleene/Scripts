@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-automator -i - ~/Library/Services/Backup\ Text.workflow
+text=`cat`
+printf "%q" $text | automator -i - ~/Library/Services/Backup\ Text.workflow
