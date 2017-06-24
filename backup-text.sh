@@ -9,7 +9,7 @@ cat > $archive_file
 destination_archive_file=$archive_file.txt
 mv -n $archive_file $destination_archive_file
 if [ $? -eq 0 ]; then
-  echo $destination_archive_file
+  echo -n $destination_archive_file
 else
-  echo $archive_file
+  echo -n $archive_file
 fi
