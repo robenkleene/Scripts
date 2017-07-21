@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-tmux-paths-run rg $1 .
+tmux-paths-run rg --smart-case --line-number $1 .
