@@ -33,6 +33,8 @@ for i in $(tmux list-windows | cut -c 1); do
     tmux run-shell -t $j "tmux display -p '#{pane_current_path}' >> $tmp_file"
   done
 done
+# Note that the front program can change the `pwd`, which might result in paths
+# appearing to be missing.
 cmd="cat $tmp_file | sort --unique | grep ."
 if $null_terminate; then
   cmd="$cmd | tr \"\n\" \"\0\""
