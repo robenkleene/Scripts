@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-tmux-paths -0 | xargs -0 rg --smart-case --line-number $@
+tmux-paths -0 | xargs -0 rg --smart-case --line-number "$@"
