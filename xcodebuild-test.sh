@@ -6,4 +6,4 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-xcodebuild test -alltargets -configuration Debug -scheme $1
+xcodebuild test -alltargets -configuration Debug -scheme $@
