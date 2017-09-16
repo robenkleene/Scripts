@@ -19,6 +19,7 @@ elif [ -d "$build_log" ]; then
   exit 1
 fi
 
+IFS='' # Prevent `read line` from stripping white space
 while read line; do
   if [[ $found == false && $line =~ "Test Suite" ]]; then 
     current_log=$test_log
