@@ -26,4 +26,5 @@ while read line; do
     found=true
   fi
   echo $line >> $current_log
+  echo $line
 done
