@@ -5,7 +5,7 @@ for i in "$@"; do
   filename=$(basename "$i")
   newfilename=$(echo "$filename" | tr -dc '[:alnum:]\r\n.\-/ ' | tr -s ' ' | tr '[A-Z]' '[a-z]' | tr ' ' '-')
   newpath=$dir/$newfilename
-  mv "$i" "$newpath"
+  mv -n "$i" "$newpath"
 done
 
 # `tr -dc '[:alnum:]\r\n. '`: Strip non-alphanumeric characters
