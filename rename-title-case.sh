@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash 
+
+set -e
 
 for i in "$@"; do
   filename=$(basename "$i")
@@ -12,6 +14,11 @@ for i in "$@"; do
     newfilename=$title.$extension
     dir=$(dirname "$i")
     newpath=$dir/$newfilename
-    mv -n "$i" "$newpath"
+    tmppath=$(mktemp $newpath.XXXXXX)
+    # First move to a temp path, this allows capitalizing single word filenames
+    # which would otherwise fail because of macOS case-sensitive file system
+    # issues
+    mv "$i" "$tmppath"
+    mv -n "$tmppath" "$newpath"
   fi
 done

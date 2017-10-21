@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 for i in "$@"; do
   dir=$(dirname "$i")
   filename=$(basename "$i")
