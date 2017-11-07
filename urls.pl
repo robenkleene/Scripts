@@ -5,10 +5,17 @@ use Getopt::Long;
 my $break;
 GetOptions('b|break' => \$break);
 
-while(<>) {
-	if( m{(\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))))}i ) {
+while (<>) {
+	my $found = 0;
+	while ($_ =~ m{(\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))))}gisx) {
 		print "$1\n";
-		if (defined $break) { last; }
+		if (defined $break) { 
+			$found = 1;
+			last; 
+		}
+	}
+	if ($found) {
+		last;
 	}
 }
 
