@@ -1,6 +1,16 @@
 #!/usr/bin/env perl
 
-my $search = "http://www.google.com/search?q=";
+use Getopt::Long;
+my $alternate;
+GetOptions ("d"  => \$alternate)
+or die("Arguments error\n");
+
+my $search;
+if ( $alternate ) {
+	$search = "http://www.duckduckgo.com/?q=";
+} else {
+	$search = "http://www.google.com/search?q=";
+}
 
 while (<>) {
 	# Remove `http` or `https`
