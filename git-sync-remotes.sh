@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+find . -name .git -type d -prune -execdir sh -c "git ls-remote --get-url" \; -exec dirname {} \;
+exit 0
+
 set -e
 
 recursive=false
@@ -29,14 +32,14 @@ while getopts ":rh" option
 done
 
 recurse_directory() {
-  cd "$1"
-  for dir in */; do 
+  # cd "$1"
+  for dir in "$1"/*/; do 
     # If there's not directory bash sets `$dir` to `*/` for some reason
     if [[ $dir != "*/" ]] ; then
       process_directory "$dir"
     fi
   done
-  cd .. >/dev/null
+  # cd .. >/dev/null
 }
 
 process_directory() {
