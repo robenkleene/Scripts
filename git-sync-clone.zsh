@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+echo "Usage: git-sync-clone <root directory> [repos file]"
+
 dry_run=true
 if [[ "$1" == "run" ]]; then
   dry_run=false
@@ -12,32 +14,13 @@ typeset -A repos
 while read line; do
   old_IFS=$IFS
   IFS=" "
-  # read -r -A columns <<< "$line"
   columns=(${(s: :)line})
   IFS=${old_IFS}
   echo "columns = $columns"
   remote=$columns[1]
   dir=$columns[2]
-
-  
-  echo "dir = $dir"
-  echo "remote = $remote"
-done < "${1:-/dev/stdin}"
-
-# repos=(
-# ~"/Development/Dotfiles/" "git@github.com:robenkleene/Dotfiles.git"
-# ~"/Development/Scripts/" "git@github.com:robenkleene/Scripts.git"
-# ~"/Development/Snippets/" "git@github.com:robenkleene/Snippets.git"
-# ~"/Development/Archive/" "git@bitbucket.org:robenkleene/archive.git"
-# ~"/Development/Settings/" "git@bitbucket.org:robenkleene/settings.git"
-# ~"/Documentation/design-references/" "git@github.com:robenkleene/design-references.git"
-# ~"/Documentation/development-references/" "git@github.com:robenkleene/development-references.git"
-# ~"/Documentation/music-production-references/" "git@github.com:robenkleene/music-production-references.git"
-# ~"/Documentation/software-references/" "git@github.com:robenkleene/software-references.git"
-# ~"/Development/Scratch/" "git@bitbucket.org:robenkleene/scratch.git"
-# )
-
-exit 0
+  repos+=( $dir $remote )
+done < "${2:-/dev/stdin}"
 
 for directory in "${(@k)repos}"; do
   remote="$repos[$directory]"
