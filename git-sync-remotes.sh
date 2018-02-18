@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
 
-url=''
-path=''
-url_line=true
-find . -name .git -type d -prune \
-  -execdir git ls-remote --get-url \; \
-  -exec dirname {} \; | while read line; do
-  if $url_line; then
-    url=$line
-    url_line=false
-  else
-    path=$line
-    echo "$url \"$path\""
-    url_line=true
-  fi
+set -e
+find . -type d -execdir test -d "{}/.git" \; -print -prune | while read dir; do
+  url=$(cd "$dir" && git ls-remote --get-url)
+  echo "$url \"$dir\""
 done
