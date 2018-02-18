@@ -4,13 +4,11 @@ handle-github() {
   echo "git@github.com:$1.git"
 }
 
-while read LINE; do
+while read line; do
   old_IFS=$IFS
   IFS=" "
-  read -r -a columns <<< "$LINE"
+  read -r type path <<< "$line"
   IFS=${old_IFS}
-  type=${columns[0]}
-  path=${columns[1]}
   # Strip quotes
   path="${path%\"}"
   path="${path#\"}"

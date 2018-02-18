@@ -17,10 +17,8 @@ typeset -A repos
 while read line; do
   old_IFS=$IFS
   IFS=" "
-  columns=(${(s: :)line})
+  read -r remote dir <<< "$line"
   IFS=${old_IFS}
-  remote=$columns[1]
-  dir=$columns[2]
   dir="${dir%\"}"
   dir="${dir#\"}"
   repos+=( $dir $remote )
