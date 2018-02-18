@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 
-echo "Usage: git-sync-clone <root directory> [repos file]"
+if [[ ! -d "$1" ]]; then
+  echo "Usage: git-sync-clone <root directory> [repos file]"
+  exit 1
+fi
 
 dry_run=true
 if [[ "$1" == "run" ]]; then
@@ -16,11 +19,14 @@ while read line; do
   IFS=" "
   columns=(${(s: :)line})
   IFS=${old_IFS}
-  echo "columns = $columns"
   remote=$columns[1]
   dir=$columns[2]
+  dir="${dir%\"}"
+  dir="${dir#\"}"
   repos+=( $dir $remote )
 done < "${2:-/dev/stdin}"
+
+cd "$1" || exit 1
 
 for directory in "${(@k)repos}"; do
   remote="$repos[$directory]"
@@ -42,10 +48,12 @@ for directory in "${(@k)repos}"; do
     fi
   else
     echo "Cloning $remote into $directory"
+    exitstatus=0
     if ! $dry_run; then
       git clone $remote "$directory"
+      exitstatus=$?
     fi
-    if (($? > 0)); then
+    if (($exitstatus > 0)); then
       echo "ERROR: Failed cloning $remote into $directory"
     fi
   fi
