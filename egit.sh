@@ -6,8 +6,7 @@ if [ "$(uname)" == "Darwin" ]; then
   EGITREPOS=$EGITREPOS:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/
 fi
 
-IFS=:
-REPOS=${EGITREPOS?"EGITREPOS is not set"}
+IFS=':' read -ra REPOS <<< "$EGITREPOS"
 
 usage () {
   echo "Usage: egit [-pln]"
@@ -94,6 +93,7 @@ function GoToDirectory {
   fi
 }
 
-for thisREPO in $REPOS; do
+for thisREPO in "${REPOS[@]}"; do
   GoToDirectory $thisREPO
 done
+
