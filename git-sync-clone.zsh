@@ -1,12 +1,12 @@
 #!/usr/bin/env zsh
 
 if [[ ! -d "$1" ]]; then
-  echo "Usage: git-sync-clone <root directory> [repos file]"
+  echo "Usage: git-sync-clone <root directory> [repos file] [run]"
   exit 1
 fi
 
 dry_run=true
-if [[ "$1" == "run" ]]; then
+if [[ "$3" == "run" ]]; then
   dry_run=false
 else
   echo "Dry Run\n"
