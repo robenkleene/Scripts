@@ -45,22 +45,22 @@ while getopts "plnh" option
   esac
 done
 
-function GitProcess {
+function git_process {
   if ! [[ -d ".git" ]]; then
     return
   fi
   nothing_to_commit=false
-  STATUS=$(git status)
+  status=$(git status)
 
   # Test git status message 1.
-  NOTHING_TO_COMMIT_MESSAGE="nothing to commit (working directory clean)"
-  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && nothing_to_commit=true
+  nothing_to_commit_message="nothing to commit (working directory clean)"
+  test "${status#*$nothing_to_commit_message}" != "$status" && nothing_to_commit=true
   # Test git status message 2.
-  NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working directory clean"
-  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && nothing_to_commit=true
+  nothing_to_commit_message="nothing to commit, working directory clean"
+  test "${status#*$nothing_to_commit_message}" != "$status" && nothing_to_commit=true
   # Test git status message 3.
-  NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working tree clean"
-  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && nothing_to_commit=true
+  nothing_to_commit_message="nothing to commit, working tree clean"
+  test "${status#*$nothing_to_commit_message}" != "$status" && nothing_to_commit=true
 
 
   if $next; then
@@ -82,13 +82,14 @@ function GitProcess {
 }
 
 function go_to_directory {
-  if [ -d "$1" ]; then
+  dir=$1
+  if [ -d "$dir" ]; then
     cd "$1"
-    GitProcess
+    git_process
   else
-    if ! $next ; then # Suppress all output if not $next
+    if ! $next; then
       echo
-      echo "Directory does not exist $1"
+      echo "Directory does not exist $dir"
     fi
   fi
 }
