@@ -6,7 +6,7 @@ if [ "$(uname)" == "Darwin" ]; then
   EGITREPOS=$EGITREPOS:~/Library/Services/:~/Library/Application\ Support/TextMate/Bundles/Roben\ Kleene.tmbundle/:~/Library/Scripts/:~/Library/Script\ Libraries/
 fi
 
-IFS=':' read -ra REPOS <<< "$EGITREPOS"
+IFS=':' read -ra repos <<< "$EGITREPOS"
 
 usage () {
   echo "Usage: egit [-pln]"
@@ -19,23 +19,23 @@ usage () {
   echo "-n : Print next directory path with unstaged changes"
 }
 
-PUSH=false
-PULL=false
-NEXT=false
+push=false
+pull=false
+next=false
 while getopts "plnh" option
   do case "$option" in
     p)
-      PUSH=true
+      push=true
       ;;
     l)
-      PULL=true
+      pull=true
       ;;
     n)
-      NEXT=true
+      next=true
       ;;
     h)
       usage
-      exit 0 
+      exit 0
       ;;
     \?)
       echo "Invalid option or missing argument"
@@ -46,25 +46,25 @@ while getopts "plnh" option
 done
 
 function GitProcess {
-  if ! [ -d ".git" ]; then
+  if ! [[ -d ".git" ]]; then
     return
   fi
-  NOTHING_TO_COMMIT=false
+  nothing_to_commit=false
   STATUS=$(git status)
 
   # Test git status message 1.
   NOTHING_TO_COMMIT_MESSAGE="nothing to commit (working directory clean)"
-  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
+  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && nothing_to_commit=true
   # Test git status message 2.
   NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working directory clean"
-  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
+  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && nothing_to_commit=true
   # Test git status message 3.
   NOTHING_TO_COMMIT_MESSAGE="nothing to commit, working tree clean"
-  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && NOTHING_TO_COMMIT=true
+  test "${STATUS#*$NOTHING_TO_COMMIT_MESSAGE}" != "$STATUS" && nothing_to_commit=true
 
 
-  if $NEXT ; then
-    if ! $NOTHING_TO_COMMIT ; then
+  if $next; then
+    if ! $nothing_to_commit; then
       pwd
       break
     fi
@@ -74,26 +74,26 @@ function GitProcess {
     git status
   fi
 
-  if $PUSH && $NOTHING_TO_COMMIT ; then
+  if $push && $nothing_to_commit; then
     git push
-  elif $PULL && $NOTHING_TO_COMMIT ; then
+  elif $pull && $nothing_to_commit; then
     git pull
   fi
 }
 
-function GoToDirectory {
+function go_to_directory {
   if [ -d "$1" ]; then
     cd "$1"
     GitProcess
   else
-    if ! $NEXT ; then # Suppress all output if not $NEXT
+    if ! $next ; then # Suppress all output if not $next
       echo
       echo "Directory does not exist $1"
     fi
   fi
 }
 
-for thisREPO in "${REPOS[@]}"; do
-  GoToDirectory $thisREPO
+for repo in "${repos[@]}"; do
+  go_to_directory $repo
 done
 
