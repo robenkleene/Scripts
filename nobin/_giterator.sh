@@ -68,11 +68,12 @@ do_git_process() {
   fi
 }
 
-go_to_directory() {
+giterate() {
   dir=$1
   if [[ -d "$dir" ]]; then
     cd "$1"
     do_git_process
+    cd - >/dev/null
   else
     if ! $next; then
       echo

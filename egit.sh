@@ -13,5 +13,5 @@ command_name="egit"
 source ~/Development/Scripts/nobin/_giterator.sh
 
 for repo in "${repos[@]}"; do
-  go_to_directory $repo
+  giterate "$repo"
 done
