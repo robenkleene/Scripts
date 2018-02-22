@@ -10,6 +10,10 @@ else
   exit 1
 fi
 
+cd "$directory"
+
+commit=$(git rev-parse HEAD)
+
 remote=$(git config --get remote.origin.url | tr -d '\n')
 
 if $(echo $remote | grep \
@@ -26,16 +30,19 @@ elif $(echo $remote | grep \
   --quiet \
   '(https://|git@)bitbucket.(com|org)[/:]'); then
   echo "Bitbucket"
+else
+  echo "$remote is not a support remote" >&2
+  exit 1
 fi
 
-# git config --get remote.origin.url
+if [[ -n "$filename" ]]; then
+  file_subpath=$(git ls-tree --full-name --name-only HEAD)
+fi
 
-# https://github.com
 
 
 # github_url = "https://github.com/#{github_subpath}"
 
-# cd directory && git rev-parse HEAD
 
 # cd directory && git ls-tree --full-name --name-only HEAD #{Shellwords.escape(filename)}
 
