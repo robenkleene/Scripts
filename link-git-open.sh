@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-link-github-markdown --url-only $@ | url-open
+link-git-markdown --url-only $@ | url-open
