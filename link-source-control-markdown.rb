@@ -32,7 +32,7 @@ line_number = options[:line_number].to_i
 filename = File.basename(file)
 directory = File.dirname(file)
 
-source_control_url = `link-source-control #{Shellwords.escape(file.path)}`.strip
+source_control_url = `~/Development/Scripts/bin/link-source-control #{Shellwords.escape(file.path)}`.strip
 
 if source_control_url =~ /^https:\/\/github.com/
   if line_number > 0
@@ -70,6 +70,7 @@ if options[:url_only]
 end
 
 # Markdown Link
+file_path = `cd #{Shellwords.escape(directory)} && git ls-tree --full-name --name-only HEAD #{Shellwords.escape(filename)}`.strip
 md_link = "[`#{file_path}`](#{source_control_url})"
 print md_link
 print quoted unless quoted == ""
