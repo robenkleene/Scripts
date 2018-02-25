@@ -11,17 +11,6 @@ else
   exit 1
 fi
 
-# urlencode() {
-#   local length="${#1}" 
-#   for (( i = 0; i < length; i++ )); do
-#   local c="${1:i:1}"
-#   case $c in
-#     [a-zA-Z0-9.~_-]) printf "$c" ;;
-#     *) printf '%%%02X' "'$c"
-#   esac
-#   done
-# }
-
 cd "$dir_path"
 
 commit=$(git rev-parse HEAD)
@@ -36,7 +25,7 @@ final_url=''
 if [[ $remote =~ (https://|git@)github.com[/:](.*) ]]; then
   remote_subpath="${BASH_REMATCH[2]}"
   remote_subpath=${remote_subpath%.git}
-  repo_url="https://github.com/$remote_subpath"
+  repo_url="github.com/$remote_subpath"
   if [[ -z "$file_subpath" ]]; then
     final_url=$repo_url
   else
@@ -45,7 +34,7 @@ if [[ $remote =~ (https://|git@)github.com[/:](.*) ]]; then
 elif [[ $remote =~ (https://|git@)bitbucket.(com|org)[/:](.*) ]]; then
   remote_subpath="${BASH_REMATCH[3]}"
   remote_subpath=${remote_subpath%.git}
-  repo_url="https://bitbucket.org/$remote_subpath"
+  repo_url="bitbucket.org/$remote_subpath"
   if [[ -z "$file_subpath" ]]; then
     final_url=$repo_url
   else
@@ -55,6 +44,6 @@ else
   echo "$remote is not a support remote" >&2
   exit 1
 fi
-# encoded_url=urlencode "$final_url"
-# echo $encoded_url
-echo $final_url
+
+encoded_url=$(~/Development/Scripts/bin/url-encode "$final_url")
+echo "https://$encoded_url"
