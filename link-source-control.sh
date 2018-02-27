@@ -13,12 +13,13 @@ fi
 
 cd "$dir_path"
 
-commit=$(git rev-parse HEAD)
-
 remote=$(git config --get remote.origin.url | tr -d '\n')
 
 if [[ -n "$file_path" ]]; then
   file_subpath=$(git ls-tree --full-name --name-only HEAD "$file_path")
+  commit=$(git rev-parse HEAD)
+else
+  branch=$(git rev-parse --abbrev-ref HEAD)
 fi
 
 final_url=''
@@ -27,7 +28,7 @@ if [[ $remote =~ (https://|git@)github.com[/:](.*) ]]; then
   remote_subpath=${remote_subpath%.git}
   repo_url="github.com/$remote_subpath"
   if [[ -z "$file_subpath" ]]; then
-    final_url=$repo_url
+    final_url=$repo_url/tree/$branch
   else
     final_url="$repo_url/blob/$commit/$file_subpath"
   fi
@@ -36,7 +37,7 @@ elif [[ $remote =~ (https://|git@)bitbucket.(com|org)[/:](.*) ]]; then
   remote_subpath=${remote_subpath%.git}
   repo_url="bitbucket.org/$remote_subpath"
   if [[ -z "$file_subpath" ]]; then
-    final_url=$repo_url
+    final_url=$repo_url/branch/$branch
   else
     final_url="$repo_url/src/$commit/$file_subpath"
   fi
