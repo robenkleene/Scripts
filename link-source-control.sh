@@ -41,9 +41,17 @@ elif [[ $remote =~ (https://|git@)bitbucket.(com|org)[/:](.*) ]]; then
   else
     final_url="$repo_url/src/$commit/$file_subpath"
   fi
-else
-  echo "$remote is not a support remote" >&2
-  exit 1
+elif [[ $remote =~ (https://|git@)([^/:]*)[/:](.*) ]]; then
+  # Otherwise, assume GitHub style, which will make enterprise Github work.
+  host="${BASH_REMATCH[2]}"
+  remote_subpath="${BASH_REMATCH[3]}"
+  remote_subpath=${remote_subpath%.git}
+  repo_url="$host/$remote_subpath"
+  if [[ -z "$file_subpath" ]]; then
+    final_url=$repo_url/tree/$branch
+  else
+    final_url="$repo_url/blob/$commit/$file_subpath"
+  fi
 fi
 
 encoded_url=$(~/Development/Scripts/bin/url-encode "$final_url")
