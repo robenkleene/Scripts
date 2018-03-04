@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-sqlite3 ~/Library/Safari/History.db 'select visit_time,title from history_visits order by visit_time desc;' \
- | while read i; do d="${i%%.*}"; echo "$(date -r $((d+978307200))) | ${i#*|}"; done \
- | head -n 30
+sqlite3 -separator $'\t' ~/Library/Safari/History.db \
+  'SELECT title, url FROM history_visits INNER JOIN history_items ON history_visits.history_item = history_items.id ORDER BY visit_time desc LIMIT 1000;' \
+  | uniq
