@@ -7,15 +7,17 @@ handle-github() {
 while read line; do
   old_IFS=$IFS
   IFS=" "
-  read -r type path <<< "$line"
+  read -ra subpath <<< "$line"
+  type=${subpath[0]}
+  subpath=${subpath[1]}
   IFS=${old_IFS}
   # Strip quotes
-  path="${path%\"}"
-  path="${path#\"}"
+  subpath="${subpath%\"}"
+  subpath="${subpath#\"}"
 
   case "$type" in
     "github")
-      handle-github $path
+      handle-github $subpath
       ;;
     *)
       echo "$type isn't supported"
