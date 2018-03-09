@@ -23,10 +23,13 @@ post_path=$(mktemp "$drafts_directory/$today-XXXX")
 content="---
 layout: post
 title: \"$title\"
-categories: tag
----"
+categories: 
+---
+"
 
 echo "$content" > "$post_path"
+cat >> "$post_path"
+
 destination_post_path="$drafts_directory/$today-$slug.md"
 mv -n "$post_path" "$destination_post_path"
 if [[ -f "$post_path" ]]; then
