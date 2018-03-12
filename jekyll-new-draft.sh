@@ -3,7 +3,7 @@
 set -e
 
 if [ "$#" -ne 1 ]; then
-    echo "Too many arguments" >&2
+    echo "Wrong number of arguments" >&2
     exit 1
 fi
 
