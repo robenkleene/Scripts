@@ -12,6 +12,9 @@ optparse = OptionParser.new do |opts|
   opts.on('-u', '--url-only', "URL only") do |u|
     options[:url_only] = u
   end
+  opts.on('-q', '--quote', "Quote") do |u|
+    options[:quote] = u
+  end
 end
 optparse.parse!
 
@@ -73,4 +76,6 @@ end
 file_path = `cd #{Shellwords.escape(directory)} && git ls-tree --full-name --name-only HEAD #{Shellwords.escape(filename)}`.strip
 md_link = "[`#{file_path}`](#{source_control_url})"
 print md_link
-print quoted unless quoted == ""
+if options[:quote]
+  print quoted unless quoted == ""
+end
