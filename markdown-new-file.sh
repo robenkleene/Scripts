@@ -19,7 +19,6 @@ fi
 file_path=$(mktemp "$directory/$title-XXXX")
 
 content="# $title
-
 "
 
 echo "$content" > "$file_path"
